@@ -57,7 +57,6 @@ export interface InvitePayload {
 }
 
 export interface InviteResponse {
-  invite: any;
   inviteToken: string;
 }
 

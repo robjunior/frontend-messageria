@@ -60,7 +60,7 @@ const AuthPage: React.FC = () => {
       const response = await registerUser(registerForm);
       // Não há token no cadastro, apenas dados do usuário
       setAuth(response, "");
-      navigate("/dashboard");
+      navigate("/orgs");
     } catch (err: unknown) {
       if (
         typeof err === "object" &&
@@ -87,7 +87,7 @@ const AuthPage: React.FC = () => {
     try {
       const response = await loginUser(loginForm);
       setAuth(response.user, response.token);
-      navigate("/dashboard");
+      navigate("/orgs");
     } catch (err: unknown) {
       if (
         typeof err === "object" &&
