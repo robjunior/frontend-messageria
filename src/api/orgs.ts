@@ -1,6 +1,4 @@
-frontend/src/api/orgs.ts
 import axios from "axios";
-import { User } from "../store/auth";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
@@ -31,7 +29,7 @@ export interface CreateOrgResponse {
 // Cria uma nova organização
 export async function createOrg(
   payload: CreateOrgPayload,
-  token: string
+  token: string,
 ): Promise<CreateOrgResponse> {
   const response = await axios.post<CreateOrgResponse>(
     `${API_URL}/orgs`,
@@ -40,7 +38,7 @@ export async function createOrg(
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
   // description não existe no backend, mas pode ser usada localmente
   return {
@@ -66,7 +64,7 @@ export interface InviteResponse {
 export async function inviteToOrg(
   orgId: string,
   payload: InvitePayload,
-  token: string
+  token: string,
 ): Promise<InviteResponse> {
   const response = await axios.post<InviteResponse>(
     `${API_URL}/orgs/${orgId}/invite`,
@@ -75,7 +73,7 @@ export async function inviteToOrg(
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
   return response.data;
 }
@@ -92,11 +90,11 @@ export interface AcceptInviteResponse {
 }
 
 export async function acceptInvite(
-  payload: AcceptInvitePayload
+  payload: AcceptInvitePayload,
 ): Promise<AcceptInviteResponse> {
   const response = await axios.post<AcceptInviteResponse>(
     `${API_URL}/orgs/accept-invite`,
-    payload
+    payload,
   );
   return response.data;
 }

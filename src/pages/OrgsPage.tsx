@@ -1,4 +1,3 @@
-frontend/src/pages/OrgsPage.tsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuthStore } from "../store/auth";
@@ -19,7 +18,10 @@ interface CreateOrgPayload {
 // Componente principal
 const OrgsPage: React.FC = () => {
   const [orgs, setOrgs] = useState<Org[]>([]);
-  const [form, setForm] = useState<CreateOrgPayload>({ name: "", description: "" });
+  const [form, setForm] = useState<CreateOrgPayload>({
+    name: "",
+    description: "",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -42,7 +44,7 @@ const OrgsPage: React.FC = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       const newOrg: Org = {
         ...response.data.org,
@@ -94,7 +96,10 @@ const OrgsPage: React.FC = () => {
         {/* Formulário de criação */}
         <form onSubmit={handleCreateOrg} className="space-y-4 mb-8">
           <div>
-            <label htmlFor="org-name" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="org-name"
+              className="block text-sm font-medium mb-1"
+            >
               Nome da Organização
             </label>
             <input
@@ -108,7 +113,10 @@ const OrgsPage: React.FC = () => {
             />
           </div>
           <div>
-            <label htmlFor="org-description" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="org-description"
+              className="block text-sm font-medium mb-1"
+            >
               Descrição (opcional)
             </label>
             <input
@@ -116,7 +124,9 @@ const OrgsPage: React.FC = () => {
               name="description"
               type="text"
               value={form.description}
-              onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, description: e.target.value }))
+              }
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
             />
           </div>
@@ -127,26 +137,35 @@ const OrgsPage: React.FC = () => {
           >
             {loading ? "Criando..." : "Criar Organização"}
           </button>
-          {error && <div className="text-red-600 text-sm text-center">{error}</div>}
-          {success && <div className="text-green-600 text-sm text-center">{success}</div>}
+          {error && (
+            <div className="text-red-600 text-sm text-center">{error}</div>
+          )}
+          {success && (
+            <div className="text-green-600 text-sm text-center">{success}</div>
+          )}
         </form>
 
         {/* Lista de organizações */}
         <div>
           <h3 className="text-lg font-semibold mb-2">Minhas Organizações</h3>
           {orgs.length === 0 ? (
-            <div className="text-gray-500 text-center">Nenhuma organização cadastrada.</div>
+            <div className="text-gray-500 text-center">
+              Nenhuma organização cadastrada.
+            </div>
           ) : (
             <ul className="divide-y">
               {orgs.map((org) => (
                 <li key={org.id} className="py-3 flex flex-col">
                   <span className="font-bold">{org.name}</span>
                   {org.description && (
-                    <span className="text-sm text-gray-600">{org.description}</span>
+                    <span className="text-sm text-gray-600">
+                      {org.description}
+                    </span>
                   )}
                   <span className="text-xs text-gray-400">ID: {org.id}</span>
                   <span className="text-xs text-gray-400">
-                    Líder: {org.ownerUserId === user.id ? "Você" : org.ownerUserId}
+                    Líder:{" "}
+                    {org.ownerUserId === user.id ? "Você" : org.ownerUserId}
                   </span>
                 </li>
               ))}
