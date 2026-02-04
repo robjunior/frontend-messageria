@@ -31,7 +31,7 @@ const RegisterPage: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -41,11 +41,19 @@ const RegisterPage: React.FC = () => {
       // Usuário pode ser redirecionado para login ou logado automaticamente se a API mudar
       setAuth(response, ""); // Sem token por enquanto
       // Aqui você pode redirecionar para a home ou página de login
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.message ||
-          "Erro ao cadastrar. Tente novamente."
-      );
+    } catch (err: unknown) {
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "response" in err &&
+        // @ts-expect-error: err.response é do tipo desconhecido, pode existir em erros do axios
+        err.response?.data?.message
+      ) {
+        // @ts-expect-error: err.response é do tipo desconhecido, pode existir em erros do axios
+        setError(err.response.data.message);
+      } else {
+        setError("Erro ao cadastrar. Tente novamente.");
+      }
     } finally {
       setLoading(false);
     }
@@ -87,7 +95,10 @@ const RegisterPage: React.FC = () => {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium mb-1"
+            >
               Senha
             </label>
             <input

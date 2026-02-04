@@ -52,7 +52,7 @@ const AuthPage: React.FC = () => {
   };
 
   // Submissão de cadastro
-  const handleRegisterSubmit = async (e: React.FormEvent) => {
+  const handleRegisterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -61,17 +61,26 @@ const AuthPage: React.FC = () => {
       // Não há token no cadastro, apenas dados do usuário
       setAuth(response, "");
       navigate("/dashboard");
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.message || "Erro ao cadastrar. Tente novamente.",
-      );
+    } catch (err: unknown) {
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "response" in err &&
+        // @ts-expect-error: err.response é do tipo desconhecido, pode existir em erros do axios
+        err.response?.data?.message
+      ) {
+        // @ts-expect-error: err.response é do tipo desconhecido, pode existir em erros do axios
+        setError(err.response.data.message);
+      } else {
+        setError("Erro ao cadastrar. Tente novamente.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   // Submissão de login
-  const handleLoginSubmit = async (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -79,11 +88,19 @@ const AuthPage: React.FC = () => {
       const response = await loginUser(loginForm);
       setAuth(response.user, response.token);
       navigate("/dashboard");
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.message ||
-          "Erro ao fazer login. Verifique suas credenciais.",
-      );
+    } catch (err: unknown) {
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "response" in err &&
+        // @ts-expect-error: err.response é do tipo desconhecido, pode existir em erros do axios
+        err.response?.data?.message
+      ) {
+        // @ts-expect-error: err.response é do tipo desconhecido, pode existir em erros do axios
+        setError(err.response.data.message);
+      } else {
+        setError("Erro ao cadastrar. Tente novamente.");
+      }
     } finally {
       setLoading(false);
     }
