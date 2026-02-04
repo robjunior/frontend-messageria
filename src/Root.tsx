@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import AuthPage from "./pages/AuthPage";
 import Dashboard from "./pages/Dashboard";
+import OrgsPage from "./pages/OrgsPage";
 import { useAuthStore } from "./store/auth";
 
 const Root: React.FC = () => {
@@ -15,6 +16,7 @@ const Root: React.FC = () => {
         {user && (
           <>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/orgs" element={<OrgsPage />} />
             <Route path="*" element={<App />} />
           </>
         )}
