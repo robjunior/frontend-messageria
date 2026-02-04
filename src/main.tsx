@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import RegisterPage from "./pages/RegisterPage";
+import AuthPage from "./pages/AuthPage";
 import { useAuthStore } from "./store/auth";
 
 function Root() {
@@ -12,12 +12,8 @@ function Root() {
   return (
     <BrowserRouter>
       <Routes>
-        {!user && <Route path="/register" element={<RegisterPage />} />}
-        {/* Outras rotas protegidas ou públicas */}
-        <Route
-          path="*"
-          element={user ? <App /> : <Navigate to="/register" replace />}
-        />
+        {!user && <Route path="*" element={<AuthPage />} />}
+        {user && <Route path="*" element={<App />} />}
       </Routes>
     </BrowserRouter>
   );
@@ -25,6 +21,6 @@ function Root() {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <Root />
   </StrictMode>,
 );
