@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { registerUser, loginUser } from "../api/auth";
 import { useAuthStore } from "../store/auth";
+import { useNavigate } from "react-router-dom";
 
 type Mode = "login" | "register";
 
@@ -24,6 +25,7 @@ const AuthPage: React.FC = () => {
 
   const setAuth = useAuthStore((state) => state.setAuth);
   const user = useAuthStore((state) => state.user);
+  const navigate = useNavigate();
 
   // Não renderiza se usuário já está logado
   if (user) return null;
@@ -58,7 +60,7 @@ const AuthPage: React.FC = () => {
       const response = await registerUser(registerForm);
       // Não há token no cadastro, apenas dados do usuário
       setAuth(response, "");
-      // Você pode redirecionar ou exibir mensagem de sucesso aqui
+      navigate("/dashboard");
     } catch (err: any) {
       setError(
         err?.response?.data?.message || "Erro ao cadastrar. Tente novamente.",
@@ -76,7 +78,7 @@ const AuthPage: React.FC = () => {
     try {
       const response = await loginUser(loginForm);
       setAuth(response.user, response.token);
-      // Você pode redirecionar para a home aqui
+      navigate("/dashboard");
     } catch (err: any) {
       setError(
         err?.response?.data?.message ||
