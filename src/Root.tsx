@@ -4,6 +4,7 @@ import App from "./App";
 import AuthPage from "./pages/AuthPage";
 import Dashboard from "./pages/Dashboard";
 import OrgsPage from "./pages/OrgsPage";
+import MessagesPage from "./pages/MessagesPage";
 import { useAuthStore } from "./store/auth";
 
 const Root: React.FC = () => {
@@ -17,6 +18,7 @@ const Root: React.FC = () => {
           <>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/orgs" element={<OrgsPage />} />
+            <Route path="/messages" element={<MessagesPage />} />
             <Route path="*" element={<App />} />
           </>
         )}
