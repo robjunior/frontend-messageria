@@ -16,10 +16,10 @@ const Root: React.FC = () => {
         {!user && <Route path="*" element={<AuthPage />} />}
         {user && (
           <>
+            <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/orgs" element={<OrgsPage />} />
             <Route path="/messages" element={<MessagesPage />} />
-            <Route path="*" element={<App />} />
           </>
         )}
       </Routes>
