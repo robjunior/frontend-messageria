@@ -3,6 +3,7 @@ import { registerUser, loginUser } from "../api/auth";
 import { useAuthStore } from "../store/auth";
 import { useNavigate } from "react-router-dom";
 import {
+  Box,
   Card,
   Stack,
   Button,
@@ -110,7 +111,7 @@ const AuthPage: React.FC = () => {
   };
 
   return (
-    <Stack align="center" space="large" style={{ minHeight: "100vh" }}>
+    <Box display="flex" alignItems="center" justifyContent="center">
       <Card>
         <Stack space="large">
           <Inline space="small" align="center">
@@ -209,7 +210,7 @@ const AuthPage: React.FC = () => {
           )}
         </Stack>
       </Card>
-    </Stack>
+    </Box>
   );
 };
 
