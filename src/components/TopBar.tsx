@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Inline,
-  Button,
-  Text,
-  Hidden,
-  Divider,
-} from "braid-design-system";
+import { Box, Inline, Hidden } from "braid-design-system";
 
 interface TopBarProps {
   logo: React.ReactNode;
@@ -19,7 +12,7 @@ const TopBar: React.FC<TopBarProps> = ({ logo, menus, userMenu }) => {
     <Box
       as="header"
       background="body"
-      boxShadow="border"
+      boxShadow="borderNeutral"
       paddingY="medium"
       paddingX={{ mobile: "medium", tablet: "large" }}
       display="flex"
@@ -33,7 +26,7 @@ const TopBar: React.FC<TopBarProps> = ({ logo, menus, userMenu }) => {
       }}
     >
       {/* Logo à esquerda */}
-      <Box minWidth={120} display="flex" alignItems="center">
+      <Box display="flex" alignItems="center">
         {logo}
       </Box>
 
@@ -47,12 +40,7 @@ const TopBar: React.FC<TopBarProps> = ({ logo, menus, userMenu }) => {
       </Box>
 
       {/* UserMenu à direita */}
-      <Box
-        minWidth={120}
-        display="flex"
-        alignItems="center"
-        justifyContent="flex-end"
-      >
+      <Box display="flex" alignItems="center" justifyContent="flexEnd">
         {userMenu}
       </Box>
     </Box>
