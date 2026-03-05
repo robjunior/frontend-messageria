@@ -1,5 +1,12 @@
 import React, { useMemo } from "react";
-import { Box, Text, Inline, OverflowMenu, Button } from "braid-design-system";
+import {
+  Box,
+  Text,
+  Inline,
+  OverflowMenu,
+  Button,
+  MenuItem,
+} from "braid-design-system";
 
 interface UserMenuProps {
   name: string;
@@ -69,18 +76,12 @@ const UserMenu: React.FC<UserMenuProps> = ({
           </Inline>
         </Button>
       )}
-      items={[
-        {
-          label: "Configurações de conta",
-          onClick: onAccountSettings,
-        },
-        {
-          label: "Sair",
-          onClick: onLogout,
-          tone: "critical",
-        },
-      ]}
-    />
+    >
+      <MenuItem onClick={onAccountSettings}>Configurações de conta</MenuItem>
+      <MenuItem onClick={onLogout} tone="critical">
+        Sair
+      </MenuItem>
+    </OverflowMenu>
   );
 };
 
