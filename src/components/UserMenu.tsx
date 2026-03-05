@@ -1,4 +1,3 @@
-frontend/src/components/UserMenu.tsx
 import React from "react";
 import {
   Box,

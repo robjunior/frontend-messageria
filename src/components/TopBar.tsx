@@ -1,4 +1,3 @@
-frontend/src/components/TopBar.tsx
 import React from "react";
 import {
   Box,
@@ -48,7 +47,12 @@ const TopBar: React.FC<TopBarProps> = ({ logo, menus, userMenu }) => {
       </Box>
 
       {/* UserMenu à direita */}
-      <Box minWidth={120} display="flex" alignItems="center" justifyContent="flex-end">
+      <Box
+        minWidth={120}
+        display="flex"
+        alignItems="center"
+        justifyContent="flex-end"
+      >
         {userMenu}
       </Box>
     </Box>
