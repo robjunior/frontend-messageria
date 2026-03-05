@@ -20,15 +20,9 @@ const Root: React.FC = () => {
           menus={
             <>
               {/* Exemplo de menus, ajuste conforme necessário */}
-              <a href="/dashboard">
-                <Button variant="ghost">Dashboard</Button>
-              </a>
-              <a href="/messages">
-                <Button variant="ghost">Mensagens</Button>
-              </a>
-              <a href="/orgs">
-                <Button variant="ghost">Organizações</Button>
-              </a>
+              <a href="/dashboard">Dashboard</a>
+              <a href="/messages">Mensagens</a>
+              <a href="/orgs">Organizações</a>
             </>
           }
           userMenu={

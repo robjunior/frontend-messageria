@@ -1,14 +1,5 @@
-import React from "react";
-import {
-  Box,
-  Text,
-  Inline,
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuDivider,
-  Button,
-  IconChevronDown,
-} from "braid-design-system";
+import React, { useMemo } from "react";
+import { Box, Text, Inline, OverflowMenu, Button } from "braid-design-system";
 
 interface UserMenuProps {
   name: string;
@@ -16,6 +7,8 @@ interface UserMenuProps {
   onLogout: () => void;
   onAccountSettings: () => void;
 }
+
+const AVATAR_SIZE = 32;
 
 function getInitial(name: string) {
   if (!name) return "?";
@@ -27,61 +20,67 @@ function getFirstName(name: string) {
   return name.trim().split(" ")[0];
 }
 
+const UserAvatar: React.FC<{ name: string; photoUrl?: string }> = ({
+  name,
+  photoUrl,
+}) => (
+  <Box
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
+    borderRadius="full"
+    background="neutralLight"
+    overflow="hidden"
+    style={{ width: AVATAR_SIZE, height: AVATAR_SIZE }}
+  >
+    {photoUrl ? (
+      <img
+        src={photoUrl}
+        alt={name ? `Avatar de ${name}` : ""}
+        style={{
+          width: AVATAR_SIZE,
+          height: AVATAR_SIZE,
+          objectFit: "cover",
+          borderRadius: "50%",
+        }}
+      />
+    ) : (
+      getInitial(name)
+    )}
+  </Box>
+);
+
 const UserMenu: React.FC<UserMenuProps> = ({
   name,
   photoUrl,
   onLogout,
   onAccountSettings,
 }) => {
-  const initial = getInitial(name);
-  const firstName = getFirstName(name);
+  // Memoize derived values for performance (optional here)
+  const firstName = useMemo(() => getFirstName(name), [name]);
 
   return (
-    <DropdownMenu
+    <OverflowMenu
       label="Menu do usuário"
-      trigger={
-        <Button variant="ghost" tone="neutral" iconAfter={<IconChevronDown />}>
+      trigger={(triggerProps) => (
+        <Button variant="ghost" tone="neutral" {...triggerProps}>
           <Inline space="small" align="center">
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              borderRadius="full"
-              background="neutralLight"
-              width={32}
-              height={32}
-              overflow="hidden"
-            >
-              {photoUrl ? (
-                <img
-                  src={photoUrl}
-                  alt={name}
-                  style={{
-                    width: 32,
-                    height: 32,
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                  }}
-                />
-              ) : (
-                <Text weight="bold" size="large" align="center">
-                  {initial}
-                </Text>
-              )}
-            </Box>
-            <Text>{firstName}</Text>
+            <UserAvatar name={name} photoUrl={photoUrl} />
           </Inline>
         </Button>
-      }
-    >
-      <DropdownMenuItem onClick={onAccountSettings}>
-        Configurações de conta
-      </DropdownMenuItem>
-      <DropdownMenuDivider />
-      <DropdownMenuItem onClick={onLogout} tone="critical">
-        Sair
-      </DropdownMenuItem>
-    </DropdownMenu>
+      )}
+      items={[
+        {
+          label: "Configurações de conta",
+          onClick: onAccountSettings,
+        },
+        {
+          label: "Sair",
+          onClick: onLogout,
+          tone: "critical",
+        },
+      ]}
+    />
   );
 };
 
